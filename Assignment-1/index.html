@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Version Control Systems: SVN and Mercurial</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #fff;
+      overflow: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin: 0;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    p {
+      font-size: 1.5rem;
+      margin: 10px 0;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    pre {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 1rem;
+      text-align: left;
+      overflow-x: auto;
+      width: 80%;
+      max-width: 800px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    pre:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background: #ff6f61;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 20px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #ff3b2f;
+      transform: translateY(-3px);
+    }
+
+    .assignment-text {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 800px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .assignment-text:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Navigation Buttons */
+    .nav-buttons {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav-buttons button {
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-buttons button:hover {
+      background: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body>
+  <div class="slides">
+    <!-- Slide 1: Title Slide -->
+    <div class="slide">
+      <h1>Version Control Systems</h1>
+      <p>Understanding Subversion (SVN) and Mercurial (Hg)</p>
+      <button class="btn" onclick="nextSlide()">Start Presentation</button>
+
+      <!-- Assignment 1 Text -->
+      <div class="assignment-text">
+        <h2>Assignment 1</h2>
+        <p>Completed following tasks:</p>
+        <ol>
+          <li>Created a new SVN repository and add a file to it.</li>
+          <li>Cloned a Mercurial repository and make a commit.</li>
+          <li>Compare the workflows of SVN and Mercurial in a short report.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Slide 2: What is Version Control? -->
+    <div class="slide">
+      <h1>What is Version Control?</h1>
+      <p>Version control is a system that records changes to files over time, allowing you to recall specific versions later.</p>
+      <p><strong>Why use it?</strong></p>
+      <ul style="text-align: left;">
+        <li>Track changes and history.</li>
+        <li>Collaborate with others.</li>
+        <li>Recover from mistakes.</li>
+        <li>Manage multiple versions of a project.</li>
+      </ul>
+      <p><strong>Types of Version Control Systems:</strong></p>
+      <ul style="text-align: left;">
+        <li><strong>Centralized:</strong> SVN, CVS</li>
+        <li><strong>Distributed:</strong> Git, Mercurial</li>
+      </ul>
+    </div>
+
+    <!-- Slide 3: Subversion (SVN) Overview -->
+    <div class="slide">
+      <h1>Subversion (SVN)</h1>
+      <p>A <strong>centralized</strong> version control system.</p>
+      <p><strong>Why use SVN?</strong></p>
+      <ul style="text-align: left;">
+        <li>Centralized repository for easy management.</li>
+        <li>Strong support for binary files.</li>
+        <li>Fine-grained access control.</li>
+        <li>Atomic commits ensure consistency.</li>
+      </ul>
+      <pre>
+        <code>
+# Install SVN
+sudo apt-get install subversion
+
+# Create a Repository
+svnadmin create /path/to/myrepo
+
+# Checkout a Working Copy
+svn checkout file:///path/to/myrepo myworkingcopy
+        </code>
+      </pre>
+    </div>
+
+    <!-- Slide 4: SVN Workflow -->
+    <div class="slide">
+      <h1>SVN Workflow</h1>
+      <p>Basic workflow for using SVN.</p>
+      <pre>
+        <code>
+# Add and Commit Files
+svn add file.txt
+svn commit -m "Added file.txt"
+
+# Update Working Copy
+svn update
+
+# Resolve Conflicts
+svn resolve --accept working file.txt
+
+# View Logs
+svn log
+
+# Revert Changes
+svn revert file.txt
+        </code>
+      </pre>
+      <p><strong>Branching and Merging:</strong></p>
+      <pre>
+        <code>
+# Create a Branch
+svn copy http://svn.example.com/repo/trunk http://svn.example.com/repo/branches/my-branch -m "Creating a branch"
+
+# Switch to Branch
+svn switch http://svn.example.com/repo/branches/my-branch
+
+# Merge Changes
+svn merge http://svn.example.com/repo/trunk
+        </code>
+      </pre>
+    </div>
+
+    <!-- Slide 5: Mercurial (Hg) Overview -->
+    <div class="slide">
+      <h1>Mercurial (Hg)</h1>
+      <p>A <strong>distributed</strong> version control system.</p>
+      <p><strong>Why use Mercurial?</strong></p>
+      <ul style="text-align: left;">
+        <li>Every user has a full copy of the repository.</li>
+        <li>Works offline.</li>
+        <li>Lightweight and fast.</li>
+        <li>Simple and intuitive commands.</li>
+      </ul>
+      <pre>
+        <code>
+# Install Mercurial
+sudo apt-get install mercurial
+
+# Initialize a Repository
+hg init myproject
+
+# Clone a Remote Repository
+hg clone https://hg.example.com/remote-repo local-copy
+        </code>
+      </pre>
+    </div>
+
+    <!-- Slide 6: Mercurial Workflow -->
+    <div class="slide">
+      <h1>Mercurial Workflow</h1>
+      <p>Basic workflow for using Mercurial.</p>
+      <pre>
+        <code>
+# Add and Commit Files
+hg add file.txt
+hg commit -m "Added file.txt"
+
+# Push Changes
+hg push
+
+# Pull Changes
+hg pull
+
+# View Logs
+hg log
+
+# Revert Changes
+hg revert file.txt
+        </code>
+      </pre>
+      <p><strong>Branching and Merging:</strong></p>
+      <pre>
+        <code>
+# Create a Branch
+hg branch my-branch
+
+# Switch to Branch
+hg update my-branch
+
+# Merge Changes
+hg merge
+        </code>
+      </pre>
+    </div>
+
+    <!-- Slide 7: SVN vs. Mercurial -->
+    <div class="slide">
+      <h1>SVN vs. Mercurial</h1>
+      <p>Key differences between the two systems.</p>
+      <pre>
+        <code>
+- SVN: Centralized, requires a server.
+- Mercurial: Distributed, works offline.
+- SVN: Directory-based branching.
+- Mercurial: Lightweight branching.
+- SVN: Better for binary files.
+- Mercurial: Faster and more scalable.
+- SVN: Requires network access for most operations.
+- Mercurial: Most operations are local.
+        </code>
+      </pre>
+    </div>
+
+    <!-- Slide 8: When to Use Which? -->
+    <div class="slide">
+      <h1>When to Use Which?</h1>
+      <p><strong>Use SVN if:</strong></p>
+      <ul style="text-align: left;">
+        <li>You need centralized control.</li>
+        <li>Your project has many binary files.</li>
+        <li>You need fine-grained access control.</li>
+        <li>You prefer a simpler, server-based workflow.</li>
+      </ul>
+      <p><strong>Use Mercurial if:</strong></p>
+      <ul style="text-align: left;">
+        <li>You need a distributed system.</li>
+        <li>You want to work offline.</li>
+        <li>You need fast and lightweight branching.</li>
+        <li>You prefer a more modern and flexible workflow.</li>
+      </ul>
+    </div>
+
+    <!-- Slide 9: Conclusion -->
+    <div class="slide">
+      <h1>Conclusion</h1>
+      <p>Version control is essential for modern software development. Choose SVN for centralized workflows and Mercurial for distributed workflows.</p>
+      <button class="btn" onclick="prevSlide()">Go Back</button>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="nav-buttons">
+    <button onclick="prevSlide()">Previous</button>
+    <button onclick="nextSlide()">Next</button>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slide').length;
+
+    function nextSlide() {
+      if (currentSlide < totalSlides - 1) {
+        currentSlide++;
+        slides.style.transform = `translateX(-${currentSlide * 100}vw)`;
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        slides.style.transform = `translateX(-${currentSlide * 100}vw)`;
+      }
+    }
+  </script>
+</body>
+</html>
